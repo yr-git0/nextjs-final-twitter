@@ -1,14 +1,29 @@
-import Link from "next/link";
+import { User } from "@prisma/client";
 import Image from "next/image";
-import useUser from "../../libs/client/useUser";
+import useSWR from "swr";
+
+interface UserWithEtcInfo extends User {
+  isFollow: boolean;
+  emailId: string;
+}
+interface UsersResponse {
+  ok: boolean;
+  users: UserWithEtcInfo[];
+}
 
 export default function SideContents() {
-  const { user } = useUser();
+  const { data, mutate } = useSWR<UsersResponse>("/api/users");
+
+  const onFollowClick = async (userId: number) => {
+    if (!data) return;
+
+    await fetch(`/api/users/${userId}/follow`, { method: "POST" });
+    mutate();
+  };
 
   return (
     <div className="w-96 pl-5 pr-12 py-3 flex flex-col gap-4">
-      <div className="relative">
-        {/* Search icon */}
+      {/* <div className="relative">
         <span
           className="absolute inset-y-0 left-1 input-group-text flex items-center whitespace-nowrap rounded px-3 py-1.5 text-center text-base font-normal text-slate-500 dark:text-slate-200"
           id="basic-addon2"
@@ -30,8 +45,8 @@ export default function SideContents() {
           className="block w-full p-2 pl-11 text-[13px] text-gray-900 border rounded-full bg-slate-200 placeholder-slate-500 font-semibold "
           placeholder="Search Twitter"
         />
-      </div>
-      <div className="bg-slate-100 rounded-xl">
+      </div> */}
+      {/* <div className="bg-slate-100 rounded-xl">
         <div className="border-b-[1px] border-gray-200 px-4 py-2 font-bold">
           What's happening
         </div>
@@ -63,22 +78,26 @@ export default function SideContents() {
         <div className="px-4 py-2 text-sm text-[#1DA1F2] cursor-pointer font-semibold hover:text-[rgb(26,140,216)]">
           Show more
         </div>
-      </div>
+      </div> */}
       <div className="bg-slate-100 rounded-xl">
         <div className="border-b-[1px] border-gray-200 px-4 py-2 font-bold">
-          Who to follow
+          팔로우 추천
         </div>
-        {[1, 2].map((i) => (
+        {data?.users.map((user) => (
           <div
-            key={i}
+            key={user.id}
             className="border-b-[1px] border-gray-200 px-4 py-2 flex justify-between items-center gap-1"
           >
             <div className="flex gap-2 items-center">
               <Image
-                src="/images/망고.png"
+                src={
+                  user.avatar
+                    ? `/images/${user.avatar}`
+                    : "/images/anonymous.jpg"
+                }
                 width={45}
                 height={45}
-                className="bg-black rounded-full"
+                className="rounded-full"
               />
               <div className="flex flex-col">
                 <span className="text-sm font-bold">{user.name}</span>
@@ -87,19 +106,29 @@ export default function SideContents() {
                 </span>
               </div>
             </div>
-            <button className="px-4 py-1 rounded-full border-[1.5px] border-[#1DA1F2] text-[#1DA1F2] font-bold text-sm h-fit hover:bg-[#1DA1F2] hover:text-white">
-              Follow
-            </button>
+            {user.isFollow ? (
+              <button
+                onClick={() => onFollowClick(user.id)}
+                className="px-4 py-1 rounded-full border-[1.5px] border-[#1DA1F2] font-bold text-sm h-fit shadow-md text-[#1DA1F2] hover:text-white hover:border-red-500 hover:bg-red-500 hover:after:content-['언팔로우'] after:content-['팔로잉']"
+              ></button>
+            ) : (
+              <button
+                onClick={() => onFollowClick(user.id)}
+                className="px-4 py-1 rounded-full border-[1.5px] border-[#1DA1F2] font-bold text-sm h-fit shadow-md bg-[#1DA1F2] text-white hover:bg-inherit hover:text-[#1DA1F2]"
+              >
+                팔로우
+              </button>
+            )}
           </div>
         ))}
-        <div className="px-4 py-2 text-sm text-[#1DA1F2] cursor-pointer font-semibold hover:text-[rgb(26,140,216)]">
-          Show more
+        <div className="px-4 py-2 text-sm text-[#1DA1F2] font-semibold hover:text-[rgb(26,140,216)]">
+          {/* Show more */}
         </div>
       </div>
       <div className="px-2 text-xs font-semibold text-slate-400">
         Terms of Service Privacy Policy Cookie Policy
         <br />
-        Ads info More © 2021 Twitter, Inc.
+        Ads info More © 2023 PYR, Inc.
       </div>
     </div>
   );

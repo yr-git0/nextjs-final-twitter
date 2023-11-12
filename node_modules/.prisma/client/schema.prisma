@@ -37,17 +37,19 @@ model Token {
 }
 
 model Tweet {
-  id        Int        @id @default(autoincrement())
-  content   String
-  user      User       @relation(fields: [userId], references: [id])
-  userId    Int
-  views     Int
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
-  likes     Like[]
-  bookmarks Bookmark[]
-  Hashtag   Hashtag[]
-  replies   Reply[]
+  id           Int        @id @default(autoincrement())
+  content      String
+  fileName     String?
+  user         User       @relation(fields: [userId], references: [id])
+  userId       Int
+  viewCount    Int        @default(0)
+  retweetCount Int        @default(0)
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  likes        Like[]
+  bookmarks    Bookmark[]
+  hashtags     Hashtag[]
+  replies      Reply[]
 }
 
 model Like {
@@ -70,9 +72,9 @@ model Bookmark {
 
 model Hashtag {
   id      Int    @id @default(autoincrement())
+  hashtag String
   tweet   Tweet  @relation(fields: [tweetId], references: [id], onDelete: Cascade)
   tweetId Int
-  hashtag String
 }
 
 model Reply {

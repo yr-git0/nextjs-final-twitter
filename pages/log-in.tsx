@@ -143,7 +143,7 @@ export default function Login() {
               {errors.password?.message}
             </p>
           </div>
-          <div className="flex items-start mt-1 pl-1">
+          {/* <div className="flex items-start mt-1 pl-1">
             <div className="flex items-center h-5">
               <input
                 {...register("rememberMe")}
@@ -159,7 +159,7 @@ export default function Login() {
             >
               Remember me
             </label>
-          </div>
+          </div> */}
           <button
             type="submit"
             className="mt-14 text-white bg-[#1dadf2] hover:bg-black font-semibold rounded-lg text-md w-full sm:w-auto px-5 py-2.5 text-center shadow-xl"
