@@ -1,5 +1,6 @@
 import SideMenu from "./sidemenu";
 import SideContents from "./sidecontents";
+import { User } from "@prisma/client";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -7,9 +8,9 @@ interface LayoutProps {
 
 export default function Layout({ children }: LayoutProps) {
   return (
-    <div className="flex h-screen">
+    <div className="flex h-screen m-auto max-w-7xl min-w-max">
       <SideMenu />
-      <main className="flex-1 border-l-2 border-r-2 border-gray-100 px-3 pt-2">
+      <main className="min-w-fit max-w-xl border-l-2 border-r-2 border-gray-100">
         {children}
       </main>
       <SideContents />

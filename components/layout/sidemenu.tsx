@@ -5,13 +5,15 @@ import { faTwitter } from "@fortawesome/free-brands-svg-icons";
 import {
   faHouseChimneyWindow,
   faHashtag,
+  faSquarePollHorizontal,
+  faEllipsis,
+} from "@fortawesome/free-solid-svg-icons";
+import {
   faBell,
   faEnvelope,
   faBookmark,
-  faSquarePollHorizontal,
   faUser,
-  faEllipsis,
-} from "@fortawesome/free-solid-svg-icons";
+} from "@fortawesome/free-regular-svg-icons";
 import MenuItem from "../menuitem";
 
 export default function SideMenu() {
@@ -56,7 +58,7 @@ export default function SideMenu() {
           <FontAwesomeIcon icon={faEllipsis} size="lg" fixedWidth />
           <Link href="/more">More</Link>
         </MenuItem>
-        <button className="w-full bg-[#1DA1F2] text-white text-sm py-2 rounded-full mt-3">
+        <button className="w-full bg-[#1DA1F2] text-white text-sm py-2 rounded-full mt-3 hover:bg-[rgb(26,140,216)]">
           Tweet
         </button>
       </div>
@@ -66,11 +68,11 @@ export default function SideMenu() {
             src="/images/망고.png"
             width={40}
             height={40}
-            className="bg-white rounded-full"
+            className="bg-black rounded-full"
           />
           <div className="flex flex-col">
-            <span className="text-sm font-bold">Name</span>
-            <span className="text-xs -mt-1 font-bold text-gray-500">@id</span>
+            <div className="text-sm font-bold leading-4">Name</div>
+            <div className="text-xs font-bold text-gray-500 leading-4">@id</div>
           </div>
         </div>
         <div className="font-bold text-xl cursor-pointer">···</div>
