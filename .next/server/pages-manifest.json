@@ -2,11 +2,14 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/": "pages/index.js",
-  "/api/users/me": "pages/api/users/me.js",
+  "/api/users/login": "pages/api/users/login.js",
   "/api/tweets": "pages/api/tweets.js",
+  "/api/users/me": "pages/api/users/me.js",
   "/api/users": "pages/api/users.js",
-  "/api/users/logout": "pages/api/users/logout.js",
-  "/log-in": "pages/log-in.js",
-  "/create-account": "pages/create-account.js"
+  "/likes": "pages/likes.js",
+  "/api/tweets/likes": "pages/api/tweets/likes.js",
+  "/bookmarks": "pages/bookmarks.js",
+  "/api/tweets/bookmarks": "pages/api/tweets/bookmarks.js",
+  "/api/tweets/[id]/like": "pages/api/tweets/[id]/like.js",
+  "/api/tweets/[id]/bookmark": "pages/api/tweets/[id]/bookmark.js"
 }
